@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-navy-950 text-slate-200;
+}
+
+a {
+  @apply text-teal-400 hover:text-teal-300;
+}
+
+input,
+select,
+textarea {
+  @apply bg-navy-900 border border-navy-600 rounded px-2 py-1.5 text-slate-100;
+}
+
+button {
+  @apply disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.table-grid {
+  @apply w-full text-sm;
+}
+
+.table-grid th {
+  @apply text-left text-xs uppercase tracking-wide text-slate-400 font-semibold px-3 py-2 border-b border-navy-600;
+}
+
+.table-grid td {
+  @apply px-3 py-2 border-b border-navy-700;
+}
+
+.table-grid tbody tr:hover {
+  @apply bg-navy-800;
+}
+
+.badge {
+  @apply inline-flex items-center rounded px-2 py-0.5 text-xs font-semibold;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded px-3 py-1.5 text-sm font-medium;
+}
+
+.btn-primary {
+  @apply btn bg-teal-600 text-white hover:bg-teal-500;
+}
+
+.btn-ghost {
+  @apply btn bg-navy-700 text-slate-100 hover:bg-navy-600;
+}
+
+.btn-danger {
+  @apply btn bg-red-800 text-white hover:bg-red-700;
+}
+
+.card {
+  @apply bg-navy-900 border border-navy-700 rounded-lg;
+}

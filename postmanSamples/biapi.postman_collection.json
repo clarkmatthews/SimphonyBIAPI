@@ -1,0 +1,2436 @@
+{
+	"info": {
+		"_postman_id": "e2170231-fda1-436d-95b8-1bbaf45a5c60",
+		"name": "Oracle Simphony Business Intelligence API _ v1.5",
+		"description": "### Documentation\n\nInstructions on how to use this collection are available on the Oracle Help Center, here: [https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/postman_collections.html](https://)\n\nDocumentation of all endpoints are available on the Oracle Help Center, here: [https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/rest-endpoints.html](https://)\n\n### Version History\n\n1.0 Initial Release\n\n1.1 Added Order Channel Dimensions and Order Channel Daily Totals (R&A 20.1.15)\n\n1.2 Added pre-request scripts to generate code challenge and code verifier for manual authentication workflow\n\n1.3 Added new Quarter Hour aggregation endpoints (R&A 20.1.16)\n\n1.4 Added new Time Cards endpoint (R&A 20.2)\n\n1.5 Added new request parameter to getPOSWasteDetail endpoint (R&A 20.3)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28958861"
+	},
+	"item": [
+		{
+			"name": "Aggregations",
+			"item": [
+				{
+					"name": "Daily Aggregations",
+					"item": [
+						{
+							"name": "Get combo item daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getComboItemDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getComboItemDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get control daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"clsdBusDt\": \"2023-01-01\"\r\n    //\"include\": \"\"\r\n    //\"opnBusDt\": \"2023-01-01\"\r\n    //\"rvcNum\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getControlDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getControlDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get discount daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getDiscountDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getDiscountDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get employee daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getEmployeeDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getEmployeeDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get job code daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderTypeDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOrderTypeDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get menu item daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getMenuItemDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get operations daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOperationsDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOperationsDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get order channel daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderChannelDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOrderChannelDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get order type daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderTypeDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOrderTypeDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get service charge daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getServiceChargeDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getServiceChargeDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get tax daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTaxDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getTaxDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get tender media daily totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTenderMediaDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getTenderMediaDailyTotals"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Quarter Hour Aggregations",
+					"item": [
+						{
+							"name": "Get combo item quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getComboItemQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getComboItemQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get discount quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getDiscountQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getDiscountQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get job code quarter hour  totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getJobCodeQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getJobCodeQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get menu item quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getMenuItemQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get operations quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOperationsQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOperationsQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get order type quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderTypeQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getOrderTypeQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get service charge quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getServiceChargeQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getServiceChargeQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get tender media quarter hour totals",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTenderMediaQuarterHourTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getTenderMediaQuarterHourTotals"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Cash Management",
+			"item": [
+				{
+					"name": "Get Cash Management details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getCashManagementDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getCashManagementDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fiscal Transactions",
+			"item": [
+				{
+					"name": "Get invoice control data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getFiscalInvoiceControlData",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getFiscalInvoiceControlData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get invoice transactions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getFiscalInvoiceData",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getFiscalInvoiceData"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get total transactions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getFiscalTotalData",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getFiscalTotalData"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Kitchen Performance",
+			"item": [
+				{
+					"name": "Get kitchen display system details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n    //\"transSinceUTC\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getKDSDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getKDSDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Labor",
+			"item": [
+				{
+					"name": "Get time card details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    //\"busDt\": \"{{env_busDate}}\",\r\n    \"postedDt\": \"{{env_postedDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n    //\"changedSinceUTC\": \"\"\r\n    //\"includeAdjustments\": true,\r\n    //\"empNum\": \"\",\r\n    //\"extPayrollID\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTimeCardDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getTimeCardDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Dimensions",
+			"item": [
+				{
+					"name": "Get payment account holders",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentAccountHolderDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentAccountHolderDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment accounts details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentAccountDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentAccountDimensions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment Transactions",
+			"item": [
+				{
+					"name": "Get payment chargeback details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"recordDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentChargebacks",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentChargebacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment payout details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"bookingDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentPayouts",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentPayouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment settlement details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"stlmtDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentSettlements",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentSettlements"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get payment transaction details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"changedSinceUTC\": \"\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPaymentTransactions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPaymentTransactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Point of Sale Dimensions",
+			"item": [
+				{
+					"name": "Get cash management items",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getCashManagementItemDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getCashManagementItemDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cashiers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getCashierDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getCashierDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get discount dimensions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getDiscountDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getDiscountDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get employee dimensions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getEmployeeDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getEmployeeDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get job codes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getJobCodeDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getJobCodeDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get latest business date",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getLatestBusDt",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getLatestBusDt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get location information",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\"\r\n    //\"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getLocationDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getLocationDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get menu item prices",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"effFrDt\": \"2023-01-01\"\r\n    //\"effToDt\": \"2023-01-01\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemPrices",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getMenuItemPrices"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get menu items",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getMenuItemDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order channels",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderChannelDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getOrderChannelDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getOrderTypeDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getOrderTypeDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get reason codes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getReasonCodeDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getReasonCodeDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get revenue centers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getRevenueCenterDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getRevenueCenterDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get service charges",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getServiceChargeDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getServiceChargeDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get taxes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTaxDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getTaxDimensions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tender media",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getTenderMediaDimensions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getTenderMediaDimensions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get guest check extensibility details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"opnBusDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestCheckExtensibilityDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getGuestCheckExtensibilityDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get guest check line item extensibility details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestCheckLineItemExtDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getGuestCheckLineItemExtDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get guest checks",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"changedSinceUTC\": \"\"\r\n    //\"clsdBusDt\": \"\"\r\n    //\"clsdGuestChecksOnly\": \"\"\r\n    //\"include\": \"\"\r\n    //\"opnBusDate\": \"\"\r\n    //\"rvcNum\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestChecks",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getGuestChecks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get non-sales transaction details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n    //\"transSinceUTC\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getNonSalesTransactions",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getNonSalesTransactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get point of sale journal log details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPOSJournalLogDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPOSJournalLogDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get point of sale waste details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n    //\"transSinceUTC\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getPOSWasteDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getPOSWasteDetails"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SPI payment details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\"\r\n    //\"changedSinceUTC\": \"\"\r\n    //\"include\": \"\"\r\n    //\"searchCriteria\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getSPIPaymentDetails",
+							"host": [
+								"{{env_appServerURL}}"
+							],
+							"path": [
+								"bi",
+								"v1",
+								"{{env_orgIdentifier}}",
+								"getSPIPaymentDetails"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Examples",
+			"item": [
+				{
+					"name": "Search or Include Examples",
+					"item": [
+						{
+							"name": "Get guest checks - specific check number",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"opnBusDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"searchCriteria\": \"where equals(guestChecks.chkNum, 4794)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestChecks",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getGuestChecks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get guest checks - menu item sales in specific time range",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ //getting all menu item sales details for checks with menu items rung in between 16 and 17 o'clock\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"opnBusDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"include\": \"curUTC, locRef, guestChecks.chkNum, guestChecks.opnUTC, guestChecks.detailLines.detailUTC, guestChecks.detailLines.prepCost, guestChecks.detailLines.aggTtl, guestChecks.detailLines.aggQty, guestChecks.detailLines.menuItem.miNum\",\r\n    \"searchCriteria\": \"where (startsWith(guestChecks.detailLines.detailUTC, '2023-08-02T17:') or startsWith(guestChecks.detailLines.detailUTC, '2023-08-02T16:')) and !isNull(guestChecks.detailLines.menuItem.miNum)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestChecks",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getGuestChecks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get menu item daily totals - include all, search MI number range",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"include\": \"locRef, busDt, revenueCenters\",\r\n    \"searchCriteria\": \"where greaterThan(revenueCenters.menuItems.miNum, 101000) and lessThan(revenueCenters.menuItems.miNum, 104002)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemDailyTotals",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getMenuItemDailyTotals"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get cash management item - search for item num > 0, name with \"C\", record num < 250",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"searchCriteria\": \"where greaterThan(cashMgmtItems.num,10) and startsWith(cashMgmtItems.name,'C') and lessThan(cashMgmtItems.recordNum,250)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getCashManagementItemDimensions",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getCashManagementItemDimensions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get menu item prices - find not effective prices in a specific range",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"effFrDt\": \"2021-05-03\",\r\n    \"searchCriteria\": \"where !isNull(menuItemPrices.effToDt)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getMenuItemPrices",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getMenuItemPrices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get employee dimensions - search for negated \"less than\", fName starts with, payrollID",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"searchCriteria\": \"where  !lessThan(employees.employeeId,3694843300) and (startsWith(employees.fName,'P') or endsWith(employees.lName,'G')) and !greaterThan(employees.payrollId,1003)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getEmployeeDimensions",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getEmployeeDimensions"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get job codes - Include specific field, search for number, name, labor category",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"include\": \"jobCodes.num,jobCodes.name,jobCodes.mstrNum,jobCodes.mstrName,jobCodes.lbrCatNum,jobCodes.lbrCatName\",\r\n    \"searchCriteria\": \"where  lessThan(jobCodes.num,50) and contains(jobCodes.name,'FOH') and equals(jobCodes.lbrCatNum,3)\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getJobCodeDimensions",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getJobCodeDimensions"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Transaction - Examples",
+					"item": [
+						{
+							"name": "Get guest checks - open businessdate and all attributes",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"opnBusDt\": \"{{env_busDate}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"include\": \"curUTC, locRef, guestChecks\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestChecks",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getGuestChecks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get guest checks - realtime checks of the last 30 mintues",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"var moment = require('moment');\r",
+											"var chai = require('chai');\r",
+											"var minutesAgo = moment().utc().subtract(30, 'minutes'); \r",
+											"var today = moment();\r",
+											"\r",
+											"//console.log('30 minutes prior to now in UTC: ' + minutesAgo.format((\"YYYY-MM-DDTHH:mm:00\"))); \r",
+											"//console.log('Todays date calculated: ' + today.format((\"YYYY-MM-DD\"))); \r",
+											"\r",
+											"var auto_env_changedSinceUTC = pm.environment.get('auto_env_changedSinceUTC');\r",
+											"var auto_env_today = pm.environment.get('auto_env_today');\r",
+											"console.log('Current value of variable auto_env_changedSinceUTC: ' + auto_env_changedSinceUTC); \r",
+											"console.log('Current value of variable auto_env_today: ' + auto_env_today); \r",
+											"\r",
+											"if (auto_env_changedSinceUTC === '' || auto_env_changedSinceUTC === 'null' || auto_env_changedSinceUTC.substring(0, 2) === 'DO') \r",
+											"{\r",
+											"    pm.environment.set('auto_env_changedSinceUTC', minutesAgo.format((\"YYYY-MM-DDTHH:mm:00\")));\r",
+											"    pm.environment.set('auto_env_today', minutesAgo.format((\"YYYY-MM-DD\")));\r",
+											"    console.log('auto_env_changedSinceUTC variable wasnt set, now it is set to 30 minutes ago: ' + minutesAgo.format((\"YYYY-MM-DDTHH:mm:00\"))); \r",
+											"    console.log('auto_env_today variable is now set to: ' + today.format((\"YYYY-MM-DD\")));  \r",
+											"} \r",
+											"else if (auto_env_today !== today.format((\"YYYY-MM-DD\"))) \r",
+											"{\r",
+											"    pm.environment.set('auto_env_changedSinceUTC', minutesAgo.format((\"YYYY-MM-DDTHH:mm:00\")));\r",
+											"    pm.environment.set('auto_env_today', minutesAgo.format((\"YYYY-MM-DD\")));\r",
+											"    console.log('auto_env_changedSinceUTC variable was old and is now set to 30 minutes ago: ' + minutesAgo.format((\"YYYY-MM-DDTHH:mm:00\"))); \r",
+											"    console.log('auto_env_today variable was old and is now set to: ' + today.format((\"YYYY-MM-DD\")));  \r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"\r",
+											"postman.setEnvironmentVariable(\"auto_env_changedSinceUTC\", jsonData.curUTC);\r",
+											"postman.setEnvironmentVariable(\"auto_env_today\", jsonData.curUTC.substring(0, 10));\r",
+											"\r",
+											"console.log('auto_env_changedSinceUTC variable is now set to the value returned by the API: ' + jsonData.curUTC);\r",
+											"console.log('auto_env_today variable is now set to the date returned by the API: ' + jsonData.curUTC.substring(0, 10));"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ // **************************************************************** \r\n    // this call emulates a realtime check collection\r\n    // it uses two environment variables\r\n    // if they are not set, or set to dates prior to today, they will initialize with a value 30 minutes prior to now.\r\n    // all subsequent calls to the API will then store the curUTC response parameter and use it for subsequent calls\r\n    // check the postman console for logging\r\n    // the logic is within the Pre-request Script as well as the Tests\r\n    // ****************************************************************\r\n    \"applicationName\": \"{{appName}}\",\r\n    \"busDt\": \"{{auto_env_today}}\",\r\n    \"locRef\": \"{{env_locRef}}\",\r\n    \"changedSinceUTC\": \"{{auto_env_changedSinceUTC}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{env_appServerURL}}/bi/v1/{{env_orgIdentifier}}/getGuestChecks",
+									"host": [
+										"{{env_appServerURL}}"
+									],
+									"path": [
+										"bi",
+										"v1",
+										"{{env_orgIdentifier}}",
+										"getGuestChecks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Manual Authentication Workflow",
+			"item": [
+				{
+					"name": "Authorize",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//OAUTH2 with PKCE specification: https://datatracker.ietf.org/doc/html/rfc7636\r",
+									"\r",
+									"//generate the code verifier ... note that the function in this collection is not \"cryptographically sound\".  Do not use in an\r",
+									"//environment that requires strong security\r",
+									"\r",
+									"function createRandomString(length) {\r",
+									"  const chars = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\r",
+									"  let result = \"\";\r",
+									"  for (let i = 0; i < length; i++) {\r",
+									"    result += chars.charAt(Math.floor(Math.random() * chars.length));\r",
+									"  }\r",
+									"  return result;\r",
+									"}\r",
+									"\r",
+									"//Verifier must be between 43 and 128 characters in length ... generate random size\r",
+									"var randoLength = Math.random() * (128 - 43) + 43;\r",
+									"var code_verifier = createRandomString(randoLength);\r",
+									"//console.log(\"generated code verifier: \"+ code_verifier);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_codeVerifier\", code_verifier)\r",
+									"\r",
+									"//hash the code_verifier using SHA 256\r",
+									"var hash = CryptoJS.SHA256(pm.environment.get(\"auto_auth_env_codeVerifier\"));\r",
+									"\r",
+									"//endcode the hashed value using base64\r",
+									"var challenge_code = hash.toString(CryptoJS.enc.Base64);\r",
+									"\r",
+									"//replace characters per specification \r",
+									"challenge_code = challenge_code.replace(\"/\",\"_\");\r",
+									"challenge_code = challenge_code.replace(\"+\",\"-\");\r",
+									"challenge_code = challenge_code.replace(\"=\",\"\");\r",
+									"\r",
+									"//console.log(\"generated code challenge: \" + challenge_code);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_codeChallenge\", challenge_code)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{env_authServerURL}}/oidc-provider/v1/oauth2/authorize?response_type=code&client_id={{env_clientID}}&scope=openid&redirect_uri=apiaccount://callback&code_challenge={{auto_auth_env_codeChallenge}}&code_challenge_method=S256",
+							"host": [
+								"{{env_authServerURL}}"
+							],
+							"path": [
+								"oidc-provider",
+								"v1",
+								"oauth2",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "client_id",
+									"value": "{{env_clientID}}",
+									"description": "Client ID of BI API Account"
+								},
+								{
+									"key": "scope",
+									"value": "openid"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "apiaccount://callback"
+								},
+								{
+									"key": "code_challenge",
+									"value": "{{auto_auth_env_codeChallenge}}"
+								},
+								{
+									"key": "code_challenge_method",
+									"value": "S256"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sign In",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"var redirecturl = jsonData.redirectUrl;\r",
+									"//console.log(redirecturl);\r",
+									"\r",
+									"const paramsString = redirecturl.split('?')[1];\r",
+									"const eachParamArray = paramsString.split('&');\r",
+									"let params = {};\r",
+									"eachParamArray.forEach((param) => {\r",
+									"    const key = param.split('=')[0];\r",
+									"    const value = param.split('=')[1];\r",
+									"    \r",
+									"    if(key == \"code\")\r",
+									"    {\r",
+									"        postman.setEnvironmentVariable(\"auto_auth_env_authCode\", value + \"=\");\r",
+									"    }\r",
+									"    \r",
+									"    Object.assign(params, {[key]: value});\r",
+									"});\r",
+									"//console.log(params);\r",
+									"//console.log(postman.getEnvironmentVariable(\"auto_auth_env_authCode\"));"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"user-agent": true,
+							"accept": true,
+							"accept-encoding": true,
+							"connection": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "{{auth_env_username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{auth_env_password}}",
+									"type": "text"
+								},
+								{
+									"key": "orgname",
+									"value": "{{env_orgIdentifier}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{env_authServerURL}}/oidc-provider/v1/oauth2/signin",
+							"host": [
+								"{{env_authServerURL}}"
+							],
+							"path": [
+								"oidc-provider",
+								"v1",
+								"oauth2",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OAuth Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_token\", jsonData.id_token);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_refreshToken\", jsonData.refresh_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "default"
+								},
+								{
+									"key": "grant_type",
+									"value": "authorization_code",
+									"description": "authorization_code or refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{env_clientID}}",
+									"type": "text"
+								},
+								{
+									"key": "code_verifier",
+									"value": "{{auto_auth_env_codeVerifier}}",
+									"type": "text"
+								},
+								{
+									"key": "code",
+									"value": "{{auto_auth_env_authCode}}",
+									"type": "text"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "apiaccount://callback",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{env_authServerURL}}/oidc-provider/v1/oauth2/token",
+							"host": [
+								"{{env_authServerURL}}"
+							],
+							"path": [
+								"oidc-provider",
+								"v1",
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OAuth Token (Refresh)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_token\", jsonData.id_token);\r",
+									"postman.setEnvironmentVariable(\"auto_auth_env_refreshToken\", jsonData.refresh_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "scope",
+									"value": "openid",
+									"type": "default"
+								},
+								{
+									"key": "grant_type",
+									"value": "refresh_token",
+									"type": "text"
+								},
+								{
+									"key": "client_id",
+									"value": "{{env_clientID}}",
+									"type": "text"
+								},
+								{
+									"key": "refresh_token",
+									"value": "{{auto_auth_env_refreshToken}}",
+									"type": "default"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "apiaccount://callback",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{env_authServerURL}}/oidc-provider/v1/oauth2/token",
+							"host": [
+								"{{env_authServerURL}}"
+							],
+							"path": [
+								"oidc-provider",
+								"v1",
+								"oauth2",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Documentation\n\nInstructions on how to use the manual authentication workflow are available on the Oracle Help Center, here: [https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/postman_collections.html]()"
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "refreshRequestParams",
+				"value": [
+					{
+						"key": "grant_type",
+						"value": "refresh_token",
+						"enabled": true,
+						"send_as": "request_body"
+					},
+					{
+						"key": "scope",
+						"value": "openid",
+						"enabled": true,
+						"send_as": "request_body"
+					},
+					{
+						"key": "client_id",
+						"value": "{{env_clientID}}",
+						"enabled": true,
+						"send_as": "request_body"
+					},
+					{
+						"key": "refresh_token",
+						"value": "{{auto_auth_env_refreshToken}}",
+						"enabled": true,
+						"send_as": "request_body"
+					},
+					{
+						"key": "redirect_uri",
+						"value": "apiaccount://callback",
+						"enabled": true,
+						"send_as": "request_body"
+					}
+				],
+				"type": "any"
+			},
+			{
+				"key": "refreshTokenUrl",
+				"value": "{{env_authServerURL}}/oidc-provider/v1/oauth2/token",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			},
+			{
+				"key": "tokenType",
+				"value": "Bearer",
+				"type": "string"
+			},
+			{
+				"key": "accessToken",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "{{env_authServerURL}}/oidc-provider/v1/oauth2/authorize",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{env_clientID}}",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "{{env_authServerURL}}/oidc-provider/v1/oauth2/token",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "token",
+				"type": "string"
+			},
+			{
+				"key": "client_authentication",
+				"value": "body",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "authorization_code_with_pkce",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid",
+				"type": "string"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "apiaccount://callback",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -1,0 +1,9 @@
+.env
+.tokens.json
+*.log
+tmp/
+.idea/
+.vs/
+node_modules/
+.next/
+out/
