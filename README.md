@@ -2,7 +2,7 @@
 
 Next.js app (port **3005**) — **Integration Manager** for scheduling Oracle Simphony BI **daily totals**, **quarter-hour totals**, and **definition/dimension** syncs into local Postgres (`biapi` / `biapiUser`).
 
-Scheduler/UI tables are prefixed `jobui_`. Oracle warehouse tables are unprefixed.
+Scheduler/UI tables are prefixed `jobui_`. Oracle warehouse tables are unprefixed. apitestdata tables have that prefix.
 
 Based on a simple Cronicle like UI schedule interface but purpose build to poll totals from Oracle Simphony POS into a postgres DB.
 
