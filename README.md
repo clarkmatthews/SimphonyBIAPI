@@ -76,6 +76,9 @@ Settings
 
 Yes, this project was designed by me and Cursor/Grok.
 
+This project is MIT licensed and may be used, forked, copied, modified, for any purpose the borrower desires. I am not responsible for any of the use or misuse of this code. Some of the materials related to this project were inherited from Oracle Simphony documentation and/or borrowed design ideas from Cronicle. I do not warranty or support the use of this freely available code. I tested this outside of production environments and cannot guarantee it's production capability. This whole project was done to simply test possibilities.
+
+
 
 
 
