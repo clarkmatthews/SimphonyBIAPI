@@ -33,6 +33,25 @@ Open [http://localhost:3005](http://localhost:3005).
 
 Totals jobs resolve locations from `getLocationDimensions` (or a locRef list) and the business date from `getLatestBusDt` unless a fixed date is set.
 
+## Mock API host
+
+[`mock-bi-api/`](mock-bi-api/) is a sister project that impersonates Oracle OpenID and BI POST APIs on port **3006**. Definitions are generated once and reused; daily totals freeze on first request; quarter-hour periods freeze after the increment ends.
+
+```powershell
+npm run mock
+```
+
+Or `cd mock-bi-api`, copy `.env.example` to `.env`, then `npm install`, `npm run migrate`, `npm run dev`.
+
+On Integration Manager Settings use:
+
+- Auth host / App host: `http://localhost:3006`
+- Client ID: `mock-client`
+- Username / password: `mockuser` / `mockpass`
+- Org: `DEMOORG`
+
+See [`mock-bi-api/README.md`](mock-bi-api/README.md).
+
 ## Docs
 
 - [Authenticate](https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/authenticate.html)
