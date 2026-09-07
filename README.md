@@ -70,6 +70,8 @@ Edit/Add Schedule Item
 
 Endpoint Options
 <img width="743" height="564" alt="image" src="https://github.com/user-attachments/assets/9deecc71-0dc4-4fa4-879e-ec091e0a8f11" />
+<img width="744" height="473" alt="image" src="https://github.com/user-attachments/assets/8ff0d64a-b6e5-4143-b353-5bf8070af230" />
+<img width="754" height="364" alt="image" src="https://github.com/user-attachments/assets/738f2e3d-171a-4eda-855f-6e45ae619bbd" />
 
 Execution History
 <img width="1041" height="354" alt="image" src="https://github.com/user-attachments/assets/db0eb82f-e224-4eac-82c1-087a7195d1a3" />
