@@ -4,20 +4,20 @@ Next.js app (port **3005**) — **Integration Manager** for scheduling Oracle Si
 
 Scheduler/UI tables are prefixed `jobui_`. Oracle warehouse tables are unprefixed.
 
+Based on a simple Cronicle like UI schedule interface but purpose build to poll totals from Oracle Simphony POS into a postgres DB.
+
 ## Prerequisites
 
 - Node.js 20+
-- PostgreSQL (`biapi` database already created)
-- Oracle MICROS BI API account (Sales and Operations access)
+- PostgreSQL (`biapi` database)
+- Oracle MICROS BI API account
 
 ## Setup
 
-```powershell
 copy .env.example .env
 npm install
 npm run migrate
 npm run dev
-```
 
 Open [http://localhost:3005](http://localhost:3005).
 
@@ -37,4 +37,4 @@ Totals jobs resolve locations from `getLocationDimensions` (or a locRef list) an
 
 - [Authenticate](https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/authenticate.html)
 - [REST endpoints](https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/rest-endpoints.html)
-- [Cronicle Web UI](https://github.com/jhuckaby/Cronicle/blob/master/docs/WebUI.md)
+
