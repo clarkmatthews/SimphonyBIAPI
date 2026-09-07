@@ -4,8 +4,6 @@ Next.js app (port **3005**) — **Integration Manager** for scheduling Oracle Si
 
 Scheduler/UI tables are prefixed `jobui_`. Oracle warehouse tables are unprefixed.
 
-The original PowerShell sample remains in [`src/`](src/) as a reference.
-
 ## Prerequisites
 
 - Node.js 20+
