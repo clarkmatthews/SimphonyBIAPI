@@ -69,7 +69,7 @@ Edit/Add Schedule Item
 <img width="1224" height="721" alt="image" src="https://github.com/user-attachments/assets/a0f04662-2458-42cd-8e6d-590776231a69" />
 
 Execution History
-<img width="1219" height="371" alt="image" src="https://github.com/user-attachments/assets/f3b4183f-0099-4d65-9675-187261cfc4ff" />
+<img width="1041" height="354" alt="image" src="https://github.com/user-attachments/assets/db0eb82f-e224-4eac-82c1-087a7195d1a3" />
 
 Settings
 <img width="1221" height="563" alt="image" src="https://github.com/user-attachments/assets/459a801a-65dc-4d62-9482-285f35903d23" />
