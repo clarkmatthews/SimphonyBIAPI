@@ -38,3 +38,24 @@ Totals jobs resolve locations from `getLocationDimensions` (or a locRef list) an
 - [Authenticate](https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/authenticate.html)
 - [REST endpoints](https://docs.oracle.com/en/industries/food-beverage/back-office/20.1/biapi/rest-endpoints.html)
 
+## Screenshots
+
+Main
+<img width="1232" height="606" alt="image" src="https://github.com/user-attachments/assets/df00dcdf-a183-46eb-9eac-ee5e82f98363" />
+
+Schedule Items
+<img width="1225" height="526" alt="image" src="https://github.com/user-attachments/assets/bf3b8d81-944c-4df7-b2e8-a668c3d0fd1f" />
+
+Edit/Add Schedule Item
+<img width="1224" height="721" alt="image" src="https://github.com/user-attachments/assets/a0f04662-2458-42cd-8e6d-590776231a69" />
+
+Execution History
+<img width="1219" height="371" alt="image" src="https://github.com/user-attachments/assets/f3b4183f-0099-4d65-9675-187261cfc4ff" />
+
+Settings
+<img width="1221" height="563" alt="image" src="https://github.com/user-attachments/assets/459a801a-65dc-4d62-9482-285f35903d23" />
+
+
+
+
+
