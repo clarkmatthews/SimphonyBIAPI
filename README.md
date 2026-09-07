@@ -74,6 +74,8 @@ Execution History
 Settings
 <img width="1221" height="563" alt="image" src="https://github.com/user-attachments/assets/459a801a-65dc-4d62-9482-285f35903d23" />
 
+Yes, this project was designed using Cursor.
+
 
 
 
