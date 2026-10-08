@@ -40,7 +40,8 @@ CREATE TABLE IF NOT EXISTS jobui_events (
     enabled      boolean NOT NULL DEFAULT false,
     schedule     jsonb NOT NULL,
     target       jsonb NOT NULL,
-    timeout_sec  integer NOT NULL DEFAULT 3600,
+    timeout_sec  integer NOT NULL DEFAULT 90,
+    max_attempts integer NOT NULL DEFAULT 3,
     notes        text,
     next_run_at  timestamptz,
     created_at   timestamptz NOT NULL DEFAULT now(),
@@ -84,7 +85,15 @@ CREATE TABLE IF NOT EXISTS jobui_oidc_tokens (
     updated_at    timestamptz NOT NULL DEFAULT now()
 );
 
-INSERT INTO jobui_oidc_tokens (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+DO $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public' AND table_name = 'jobui_oidc_tokens' AND column_name = 'id'
+    ) THEN
+        INSERT INTO jobui_oidc_tokens (id) VALUES (1) ON CONFLICT (id) DO NOTHING;
+    END IF;
+END $$;
 
 INSERT INTO jobui_events (name, category_id, endpoint_id, enabled, schedule, target, notes, next_run_at)
 SELECT

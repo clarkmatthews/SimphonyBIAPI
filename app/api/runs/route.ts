@@ -8,8 +8,15 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const active = url.searchParams.get('active') === '1';
   const eventId = url.searchParams.get('eventId') || undefined;
+  const requestedLimit = Number(url.searchParams.get('limit'));
+  const limit =
+    Number.isFinite(requestedLimit) && requestedLimit > 0
+      ? Math.min(Math.floor(requestedLimit), 100)
+      : active
+        ? 50
+        : 100;
   const [runs, upcoming, today] = await Promise.all([
-    listRuns({ active, eventId, limit: active ? 50 : 100 }),
+    listRuns({ active, eventId, limit }),
     upcomingEvents(24),
     queryOne<{ completed: string; failed: string }>(
       `SELECT

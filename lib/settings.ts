@@ -2,29 +2,42 @@ import { queryOne } from './db';
 import type { Settings } from './types';
 
 export async function getSettings() {
-  const row = await queryOne<Settings>('SELECT * FROM jobui_settings WHERE id = 1');
+  const row = await queryOne<Settings>(
+    `SELECT
+       s.id,
+       s.active_profile_id,
+       p.name AS active_profile_name,
+       p.auth_host,
+       p.app_host,
+       p.client_id,
+       p.api_username,
+       p.api_password,
+       p.org_name,
+       p.org_identifier,
+       p.application_name,
+       s.timezone,
+       s.scheduler_enabled,
+       s.updated_at
+     FROM jobui_settings s
+     LEFT JOIN jobui_profiles p ON p.id = s.active_profile_id
+     WHERE s.id = 1`
+  );
   if (!row) throw new Error('jobui_settings row missing; run npm run migrate');
   return row;
 }
 
-export async function saveSettings(patch: Partial<Settings>) {
+export async function saveSettings(
+  patch: Partial<Pick<Settings, 'timezone' | 'scheduler_enabled' | 'active_profile_id'>>
+) {
   const current = await getSettings();
-  const next = { ...current, ...patch };
   await queryOne(
     `UPDATE jobui_settings SET
-      auth_host = $1, app_host = $2, client_id = $3, api_username = $4, api_password = $5,
-      org_name = $6, org_identifier = $7, timezone = $8, scheduler_enabled = $9, updated_at = now()
+      timezone = $1, scheduler_enabled = $2, active_profile_id = $3, updated_at = now()
      WHERE id = 1`,
     [
-      next.auth_host,
-      next.app_host,
-      next.client_id,
-      next.api_username,
-      next.api_password,
-      next.org_name,
-      next.org_identifier,
-      next.timezone || 'America/Los_Angeles',
-      next.scheduler_enabled,
+      patch.timezone ?? current.timezone ?? 'America/Los_Angeles',
+      patch.scheduler_enabled ?? current.scheduler_enabled,
+      patch.active_profile_id !== undefined ? patch.active_profile_id : current.active_profile_id,
     ]
   );
   return getSettings();
@@ -39,4 +52,12 @@ export function oracleReady(settings: Settings) {
       (settings.api_password || process.env.API_PASSWORD) &&
       (settings.org_name || process.env.ORG_NAME)
   );
+}
+
+export function maskSettings(settings: Settings) {
+  return {
+    ...settings,
+    api_password: settings.api_password ? '••••••••' : '',
+    has_password: Boolean(settings.api_password || process.env.API_PASSWORD),
+  };
 }

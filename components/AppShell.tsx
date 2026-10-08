@@ -16,11 +16,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [now, setNow] = useState('');
   const [enabled, setEnabled] = useState(true);
+  const [profileName, setProfileName] = useState('');
 
   async function loadScheduler() {
     const res = await fetch('/api/scheduler', { cache: 'no-store' });
     const data = await res.json();
     setEnabled(Boolean(data.enabled));
+    setProfileName(data.activeProfileName || '');
     setNow(new Date(data.now).toLocaleString());
   }
 
@@ -29,8 +31,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     const id = setInterval(() => {
       setNow(new Date().toLocaleString());
     }, 1000);
-    return () => clearInterval(id);
-  }, []);
+    const poll = setInterval(() => {
+      void loadScheduler();
+    }, 5000);
+    return () => {
+      clearInterval(id);
+      clearInterval(poll);
+    };
+  }, [pathname]);
 
   async function toggle(next: boolean) {
     await fetch('/api/scheduler', {
@@ -66,16 +74,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="min-w-0">
         <header className="h-12 border-b border-navy-700 bg-navy-900 flex items-center justify-between px-5">
           <div className="text-sm text-slate-300">{now}</div>
-          <label className="flex items-center gap-2 text-sm">
-            <span className="text-slate-400">Scheduler</span>
-            <button
-              type="button"
-              onClick={() => void toggle(!enabled)}
-              className={`w-12 h-6 rounded-full relative ${enabled ? 'bg-teal-600' : 'bg-navy-600'}`}
-            >
-              <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${enabled ? 'left-6' : 'left-0.5'}`} />
-            </button>
-          </label>
+          <div className="flex items-center gap-4">
+            {profileName && (
+              <div className="text-sm text-slate-400">
+                Active: <span className="text-teal-400">{profileName}</span>
+              </div>
+            )}
+            <label className="flex items-center gap-2 text-sm">
+              <span className="text-slate-400">Scheduler</span>
+              <button
+                type="button"
+                onClick={() => void toggle(!enabled)}
+                className={`w-12 h-6 rounded-full relative ${enabled ? 'bg-teal-600' : 'bg-navy-600'}`}
+              >
+                <span className={`absolute top-0.5 h-5 w-5 rounded-full bg-white transition-all ${enabled ? 'left-6' : 'left-0.5'}`} />
+              </button>
+            </label>
+          </div>
         </header>
         <main className="p-6">{children}</main>
       </div>

@@ -24,6 +24,11 @@ function mapRow(endpoint: EndpointDef, layers: Record<string, unknown>[]) {
   if (Object.keys(extra).length && endpoint.table !== 'operations_daily_totals') {
     row.extra = extra;
   }
+  for (const key of endpoint.uniqueKey) {
+    if ((row[key] === null || row[key] === undefined || row[key] === '') && key.endsWith('_dt') && key !== 'bus_dt') {
+      row[key] = '0001-01-01';
+    }
+  }
   return row;
 }
 
@@ -34,14 +39,17 @@ export function flattenPayload(endpoint: EndpointDef, payload: Record<string, un
   }
 
   if (endpoint.kind === 'latestBusDt') {
-    return [mapRow(endpoint, [root])];
+    return keepComplete(endpoint, [mapRow(endpoint, [root])]);
   }
 
   if (endpoint.rootArray) {
     const items = asArray(root[endpoint.rootArray] ?? root[endpoint.rootArray.replace(/s$/, '')]);
     const fallbackArrays = Object.values(root).filter(Array.isArray) as Record<string, unknown>[][];
     const list = items.length ? items : fallbackArrays[0] || [];
-    return list.map((item) => mapRow(endpoint, [root, item]));
+    return keepComplete(
+      endpoint,
+      list.map((item) => mapRow(endpoint, [root, item]))
+    );
   }
 
   const rows: Record<string, unknown>[] = [];
@@ -55,5 +63,11 @@ export function flattenPayload(endpoint: EndpointDef, payload: Record<string, un
       }
     }
   }
-  return rows.filter((row) => endpoint.uniqueKey.every((key) => row[key] !== null && row[key] !== undefined && row[key] !== ''));
+  return keepComplete(endpoint, rows);
+}
+
+function keepComplete(endpoint: EndpointDef, rows: Record<string, unknown>[]) {
+  return rows.filter((row) =>
+    endpoint.uniqueKey.every((key) => row[key] !== null && row[key] !== undefined && row[key] !== '')
+  );
 }

@@ -2,6 +2,18 @@ import { query, queryOne } from './db';
 import { computeNextRun } from './schedule';
 import type { EventRow, EventRun, ScheduleConfig, TargetConfig } from './types';
 
+export function normalizeTimeout(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 1) return 90;
+  return Math.floor(n);
+}
+
+export function normalizeAttempts(value: unknown) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 1) return 3;
+  return Math.floor(n);
+}
+
 function parseEvent(row: Record<string, unknown>): EventRow {
   return {
     ...(row as unknown as EventRow),
@@ -26,8 +38,8 @@ export async function createEvent(
 ) {
   const next = input.enabled ? computeNextRun(input.schedule, timezone) : null;
   const row = await queryOne(
-    `INSERT INTO jobui_events (name, category_id, endpoint_id, enabled, schedule, target, timeout_sec, notes, next_run_at)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+    `INSERT INTO jobui_events (name, category_id, endpoint_id, enabled, schedule, target, timeout_sec, max_attempts, notes, next_run_at)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
      RETURNING *`,
     [
       input.name,
@@ -36,7 +48,8 @@ export async function createEvent(
       input.enabled,
       JSON.stringify(input.schedule),
       JSON.stringify(input.target),
-      input.timeout_sec,
+      normalizeTimeout(input.timeout_sec),
+      normalizeAttempts(input.max_attempts),
       input.notes,
       next,
     ]
@@ -52,7 +65,7 @@ export async function updateEvent(id: string, input: Partial<EventRow>, timezone
   const row = await queryOne(
     `UPDATE jobui_events SET
       name = $2, category_id = $3, endpoint_id = $4, enabled = $5, schedule = $6, target = $7,
-      timeout_sec = $8, notes = $9, next_run_at = $10, updated_at = now()
+      timeout_sec = $8, max_attempts = $9, notes = $10, next_run_at = $11, updated_at = now()
      WHERE id = $1 RETURNING *`,
     [
       id,
@@ -62,7 +75,8 @@ export async function updateEvent(id: string, input: Partial<EventRow>, timezone
       next.enabled,
       JSON.stringify(next.schedule),
       JSON.stringify(next.target),
-      next.timeout_sec,
+      normalizeTimeout(next.timeout_sec),
+      normalizeAttempts(next.max_attempts),
       next.notes,
       nextRun,
     ]
@@ -83,12 +97,23 @@ export async function listRuns(opts: { active?: boolean; eventId?: string; limit
     where.push(`event_id = $${params.length}`);
   }
   params.push(opts.limit ?? 100);
-  const sql = `SELECT * FROM jobui_event_runs ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY created_at DESC LIMIT $${params.length}`;
+  const sql = `SELECT id, event_id, event_name, endpoint_id, trigger, status, started_at, finished_at,
+    rows_upserted, locations_done, error, log_text, created_at
+    FROM jobui_event_runs ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY created_at DESC LIMIT $${params.length}`;
   return query<EventRun>(sql, params);
 }
 
 export async function getRun(id: string) {
-  return queryOne<EventRun>('SELECT * FROM jobui_event_runs WHERE id = $1', [id]);
+  const row = await queryOne<EventRun>('SELECT * FROM jobui_event_runs WHERE id = $1', [id]);
+  if (!row) return null;
+  if (typeof row.io_exchanges === 'string') {
+    try {
+      row.io_exchanges = JSON.parse(row.io_exchanges);
+    } catch {
+      row.io_exchanges = [];
+    }
+  }
+  return row;
 }
 
 export async function createRun(event: EventRow, trigger: string) {

@@ -4,7 +4,7 @@ import { executeRun } from './bi/sync';
 import { computeNextRun } from './schedule';
 import { getSettings } from './settings';
 import type { EventRow, ScheduleConfig, TargetConfig } from './types';
-import { createRun, getEvent } from './events';
+import { createRun, getEvent, normalizeTimeout } from './events';
 
 let timer: NodeJS.Timeout | null = null;
 let ticking = false;
@@ -28,18 +28,45 @@ async function launch(event: EventRow, trigger: string) {
   }
   await logActivity('job_start', `${event.name} (${trigger})`, event.id, run.id);
   const settings = await getSettings();
+  const timeoutSec = normalizeTimeout(event.timeout_sec);
+  const controller = new AbortController();
+  let timedOut = false;
+  const timeoutHandle = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+    void queryOne(
+      `UPDATE jobui_event_runs
+       SET status = 'error', finished_at = now(), error = $2, log_text = log_text || $3
+       WHERE id = $1 AND status IN ('queued','running')
+       RETURNING id`,
+      [run.id, `Timed out after ${timeoutSec} seconds`, `Timed out after ${timeoutSec} seconds\n`]
+    ).then((updated) => {
+      if (updated) void logActivity('job_error', `${event.name}: Timed out after ${timeoutSec} seconds`, event.id, run.id);
+    }).catch((err) => console.error('timeout update failed', err));
+  }, timeoutSec * 1000);
   void (async () => {
     try {
-      await executeRun(run.id, event, settings);
+      await executeRun(run.id, event, settings, controller.signal);
     } catch (err) {
       const aborted = Boolean((err as { aborted?: boolean }).aborted);
-      const message = err instanceof Error ? err.message : String(err);
-      await queryOne(
-        `UPDATE jobui_event_runs SET status = $2, finished_at = now(), error = $3, log_text = log_text || $4 WHERE id = $1`,
+      const message =
+        !aborted && (timedOut || controller.signal.aborted)
+          ? `Timed out after ${timeoutSec} seconds`
+          : err instanceof Error
+            ? err.message
+            : String(err);
+      const updated = await queryOne(
+        `UPDATE jobui_event_runs
+         SET status = $2, finished_at = now(), error = $3, log_text = log_text || $4
+         WHERE id = $1 AND status IN ('queued','running')
+         RETURNING id`,
         [run.id, aborted ? 'aborted' : 'error', message, `${message}\n`]
       );
-      await logActivity(aborted ? 'job_aborted' : 'job_error', `${event.name}: ${message}`, event.id, run.id);
+      if (updated) {
+        await logActivity(aborted ? 'job_aborted' : 'job_error', `${event.name}: ${message}`, event.id, run.id);
+      }
     } finally {
+      clearTimeout(timeoutHandle);
       const fresh = await getEvent(event.id);
       if (fresh?.enabled) {
         const next = computeNextRun(fresh.schedule, settings.timezone);

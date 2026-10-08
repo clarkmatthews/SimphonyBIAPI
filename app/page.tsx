@@ -2,21 +2,27 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { JobRunTable } from '@/components/JobRunTable';
 import { StatusBadge, formatElapsed, formatWhen } from '@/components/StatusBadge';
 
 export default function HomePage() {
   const [status, setStatus] = useState<Record<string, unknown> | null>(null);
   const [active, setActive] = useState<any[]>([]);
   const [upcoming, setUpcoming] = useState<any[]>([]);
+  const [recent, setRecent] = useState<any[]>([]);
+  const [recentOpen, setRecentOpen] = useState(false);
+  const [upcomingOpen, setUpcomingOpen] = useState(false);
 
   async function refresh() {
-    const [s, r] = await Promise.all([
+    const [s, r, h] = await Promise.all([
       fetch('/api/status', { cache: 'no-store' }).then((x) => x.json()),
       fetch('/api/runs?active=1', { cache: 'no-store' }).then((x) => x.json()),
+      fetch('/api/runs?limit=10', { cache: 'no-store' }).then((x) => x.json()),
     ]);
     setStatus(s);
     setActive(r.runs || []);
     setUpcoming(r.upcoming || []);
+    setRecent(h.runs || []);
   }
 
   useEffect(() => {
@@ -95,7 +101,36 @@ export default function HomePage() {
       </section>
 
       <section className="card overflow-hidden">
-        <div className="px-4 py-3 border-b border-navy-700 font-semibold">Upcoming Events (24h)</div>
+        <div className={`px-4 py-3 font-semibold flex items-center gap-2 ${recentOpen ? 'border-b border-navy-700' : ''}`}>
+          <button
+            type="button"
+            className="btn-ghost px-2 py-0.5 font-mono"
+            onClick={() => setRecentOpen((open) => !open)}
+            title={recentOpen ? 'Collapse recent jobs' : 'Expand recent jobs'}
+          >
+            {recentOpen ? '−' : '+'}
+          </button>
+          <span>Recent Jobs</span>
+          <Link href="/history" className="ml-auto text-sm font-normal text-teal-400">
+            View all
+          </Link>
+        </div>
+        {recentOpen && <JobRunTable runs={recent} emptyMessage="No job history." />}
+      </section>
+
+      <section className="card overflow-hidden">
+        <div className={`px-4 py-3 font-semibold flex items-center gap-2 ${upcomingOpen ? 'border-b border-navy-700' : ''}`}>
+          <button
+            type="button"
+            className="btn-ghost px-2 py-0.5 font-mono"
+            onClick={() => setUpcomingOpen((open) => !open)}
+            title={upcomingOpen ? 'Collapse upcoming events' : 'Expand upcoming events'}
+          >
+            {upcomingOpen ? '−' : '+'}
+          </button>
+          <span>Upcoming Events (24h)</span>
+        </div>
+        {upcomingOpen && (
         <table className="table-grid">
           <thead>
             <tr>
@@ -129,6 +164,7 @@ export default function HomePage() {
             ))}
           </tbody>
         </table>
+        )}
       </section>
     </div>
   );

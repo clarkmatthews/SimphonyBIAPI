@@ -358,7 +358,7 @@ export async function latestBusDt(locRef: string) {
     locRef,
     latestBusDt: todayInTz(tz),
     curUTC: utcNowIso(),
-    curUtc: utcNowIso(),
+    softwareVersion: '20.1',
   };
 }
 

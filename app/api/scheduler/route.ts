@@ -9,11 +9,17 @@ export async function GET() {
     enabled: settings.scheduler_enabled,
     timezone: settings.timezone,
     now: new Date().toISOString(),
+    activeProfileId: settings.active_profile_id,
+    activeProfileName: settings.active_profile_name,
   });
 }
 
 export async function POST(req: Request) {
   const body = await req.json();
   const saved = await saveSettings({ scheduler_enabled: Boolean(body.enabled) });
-  return NextResponse.json({ enabled: saved.scheduler_enabled });
+  return NextResponse.json({
+    enabled: saved.scheduler_enabled,
+    activeProfileId: saved.active_profile_id,
+    activeProfileName: saved.active_profile_name,
+  });
 }

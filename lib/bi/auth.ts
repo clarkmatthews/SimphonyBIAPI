@@ -3,7 +3,7 @@ import { queryOne } from '../db';
 import type { Settings } from '../types';
 
 const REDIRECT_URI = 'apiaccount://callback';
-const APP_NAME = 'SimphonyBIAPI-Sample';
+export const DEFAULT_APP_NAME = 'SimphonyBIAPI-Sample';
 
 export type OracleConfig = {
   authHost: string;
@@ -13,6 +13,8 @@ export type OracleConfig = {
   password: string;
   orgName: string;
   orgIdentifier: string;
+  applicationName: string;
+  profileId: string | null;
 };
 
 function normalizeAuthHost(host: string) {
@@ -31,6 +33,8 @@ export function settingsToOracle(settings: Settings): OracleConfig | null {
   const password = settings.api_password || process.env.API_PASSWORD || '';
   const orgName = settings.org_name || process.env.ORG_NAME || '';
   const orgIdentifier = settings.org_identifier || process.env.ORG_IDENTIFIER || orgName;
+  const applicationName =
+    settings.application_name || process.env.APPLICATION_NAME || DEFAULT_APP_NAME;
   if (!authHost || !appHost || !clientId || !username || !password || !orgName) {
     return null;
   }
@@ -42,6 +46,8 @@ export function settingsToOracle(settings: Settings): OracleConfig | null {
     password,
     orgName,
     orgIdentifier,
+    applicationName,
+    profileId: settings.active_profile_id,
   };
 }
 
@@ -67,17 +73,23 @@ function jwtExp(token: string): Date | null {
   }
 }
 
-async function saveTokens(idToken: string, refreshToken?: string | null) {
+async function saveTokens(profileId: string | null, idToken: string, refreshToken?: string | null) {
+  if (!profileId) return;
   const expires = jwtExp(idToken);
   await queryOne(
-    `UPDATE jobui_oidc_tokens
-     SET id_token = $1, refresh_token = COALESCE($2, refresh_token), expires_at = $3, obtained_at = now(), updated_at = now()
-     WHERE id = 1`,
-    [idToken, refreshToken ?? null, expires]
+    `INSERT INTO jobui_oidc_tokens (profile_id, id_token, refresh_token, expires_at, obtained_at, updated_at)
+     VALUES ($1, $2, $3, $4, now(), now())
+     ON CONFLICT (profile_id) DO UPDATE SET
+       id_token = EXCLUDED.id_token,
+       refresh_token = COALESCE(EXCLUDED.refresh_token, jobui_oidc_tokens.refresh_token),
+       expires_at = EXCLUDED.expires_at,
+       obtained_at = now(),
+       updated_at = now()`,
+    [profileId, idToken, refreshToken ?? null, expires]
   );
 }
 
-async function formPost(url: string, body: Record<string, string>, cookie?: string) {
+async function formPost(url: string, body: Record<string, string>, cookie?: string, signal?: AbortSignal) {
   const res = await fetch(url, {
     method: 'POST',
     headers: {
@@ -86,6 +98,7 @@ async function formPost(url: string, body: Record<string, string>, cookie?: stri
     },
     body: new URLSearchParams(body),
     redirect: 'manual',
+    signal,
   });
   const text = await res.text();
   let json: Record<string, unknown> | null = null;
@@ -98,10 +111,14 @@ async function formPost(url: string, body: Record<string, string>, cookie?: stri
   return { res, text, json, cookies: setCookie };
 }
 
-export async function getIdToken(config: OracleConfig): Promise<string> {
-  const cached = await queryOne<{ id_token: string | null; refresh_token: string | null; expires_at: string | null }>(
-    'SELECT id_token, refresh_token, expires_at FROM jobui_oidc_tokens WHERE id = 1'
-  );
+export async function getIdToken(config: OracleConfig, signal?: AbortSignal): Promise<string> {
+  if (signal?.aborted) throw Object.assign(new Error('Timed out'), { timedOut: true });
+  const cached = config.profileId
+    ? await queryOne<{ id_token: string | null; refresh_token: string | null; expires_at: string | null }>(
+        'SELECT id_token, refresh_token, expires_at FROM jobui_oidc_tokens WHERE profile_id = $1',
+        [config.profileId]
+      )
+    : null;
   if (cached?.id_token && cached.expires_at) {
     const exp = new Date(cached.expires_at);
     if (exp.getTime() - Date.now() > 5 * 24 * 60 * 60 * 1000) {
@@ -112,19 +129,25 @@ export async function getIdToken(config: OracleConfig): Promise<string> {
   if (cached?.refresh_token) {
     try {
       const tokenUrl = `${config.authHost}/oidc-provider/v1/oauth2/token`;
-      const refreshed = await formPost(tokenUrl, {
-        scope: 'openid',
-        grant_type: 'refresh_token',
-        client_id: config.clientId,
-        refresh_token: cached.refresh_token,
-        redirect_uri: REDIRECT_URI,
-      });
+      const refreshed = await formPost(
+        tokenUrl,
+        {
+          scope: 'openid',
+          grant_type: 'refresh_token',
+          client_id: config.clientId,
+          refresh_token: cached.refresh_token,
+          redirect_uri: REDIRECT_URI,
+        },
+        undefined,
+        signal
+      );
       const idToken = String(refreshed.json?.id_token || '');
       if (idToken) {
-        await saveTokens(idToken, String(refreshed.json?.refresh_token || cached.refresh_token));
+        await saveTokens(config.profileId, idToken, String(refreshed.json?.refresh_token || cached.refresh_token));
         return idToken;
       }
-    } catch {
+    } catch (err) {
+      if (signal?.aborted) throw err;
       /* fall through to full PKCE */
     }
   }
@@ -138,7 +161,7 @@ export async function getIdToken(config: OracleConfig): Promise<string> {
   authorize.searchParams.set('code_challenge', pkce.challenge);
   authorize.searchParams.set('code_challenge_method', 'S256');
 
-  const authRes = await fetch(authorize, { redirect: 'manual' });
+  const authRes = await fetch(authorize, { redirect: 'manual', signal });
   const cookies = (authRes.headers.getSetCookie?.() ?? []).map((c) => c.split(';')[0]).join('; ');
 
   const signin = await formPost(
@@ -148,7 +171,8 @@ export async function getIdToken(config: OracleConfig): Promise<string> {
       password: config.password,
       orgname: config.orgName,
     },
-    cookies
+    cookies,
+    signal
   );
 
   if (signin.json?.nextOp === 'expired') {
@@ -177,15 +201,16 @@ export async function getIdToken(config: OracleConfig): Promise<string> {
       code,
       redirect_uri: REDIRECT_URI,
     },
-    tokenCookies
+    tokenCookies,
+    signal
   );
 
   const idToken = String(token.json?.id_token || '');
   if (!idToken) {
     throw new Error(`Token response missing id_token: ${token.text.slice(0, 300)}`);
   }
-  await saveTokens(idToken, String(token.json?.refresh_token || ''));
+  await saveTokens(config.profileId, idToken, String(token.json?.refresh_token || ''));
   return idToken;
 }
 
-export { APP_NAME };
+export { DEFAULT_APP_NAME as APP_NAME };

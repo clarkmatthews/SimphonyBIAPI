@@ -53,12 +53,12 @@ export const ITEM_KINDS = [
 export type ItemKind = (typeof ITEM_KINDS)[number];
 
 const CITIES = [
-  { name: 'Harbor Grill', city: 'Seattle', tz: 'America/Los_Angeles', prefix: 'SEA' },
-  { name: 'Canyon Kitchen', city: 'Denver', tz: 'America/Denver', prefix: 'DEN' },
-  { name: 'Lakeview Bistro', city: 'Chicago', tz: 'America/Chicago', prefix: 'CHI' },
-  { name: 'Pierhouse Cafe', city: 'Boston', tz: 'America/New_York', prefix: 'BOS' },
-  { name: 'Mission Tavern', city: 'San Francisco', tz: 'America/Los_Angeles', prefix: 'SFO' },
-  { name: 'Riverwalk Grill', city: 'Austin', tz: 'America/Chicago', prefix: 'AUS' },
+  { name: 'Harbor Grill', city: 'Seattle', region: 'WA', regionName: 'Washington', tz: 'America/Los_Angeles', prefix: 'SEA' },
+  { name: 'Canyon Kitchen', city: 'Denver', region: 'CO', regionName: 'Colorado', tz: 'America/Denver', prefix: 'DEN' },
+  { name: 'Lakeview Bistro', city: 'Chicago', region: 'IL', regionName: 'Illinois', tz: 'America/Chicago', prefix: 'CHI' },
+  { name: 'Pierhouse Cafe', city: 'Boston', region: 'MA', regionName: 'Massachusetts', tz: 'America/New_York', prefix: 'BOS' },
+  { name: 'Mission Tavern', city: 'San Francisco', region: 'CA', regionName: 'California', tz: 'America/Los_Angeles', prefix: 'SFO' },
+  { name: 'Riverwalk Grill', city: 'Austin', region: 'TX', regionName: 'Texas', tz: 'America/Chicago', prefix: 'AUS' },
 ];
 
 const RVC_NAMES = ['Dining Room', 'Bar', 'Patio', 'Takeout', 'Banquet'];
@@ -133,6 +133,14 @@ export function generateLocations(): LocationRow[] {
       curr: 'USD',
       addrLn1: `${randInt(100, 9999)} ${city.city} Ave`,
       addrLn2: city.city,
+      addrLn3: '',
+      postalCode: String(randInt(10000, 99999)),
+      phone: `555${randInt(1000000, 9999999)}`,
+      phoneCountryCode: '1',
+      countryCode: 'US',
+      countryName: 'United States',
+      regionCode: city.region,
+      regionName: city.regionName,
     };
     return {
       loc_ref: locRef,
@@ -154,7 +162,7 @@ export function generateRvcs(locRef: string): RvcRow[] {
   const count = randInt(2, 4);
   return pick(RVC_NAMES, count).map((name, i) => {
     const rvcNum = i + 1;
-    const extra = { rvcNum, name, rvcName: name, active: true };
+    const extra = { num: rvcNum, name, mstrNum: rvcNum, mstrName: name };
     return { loc_ref: locRef, rvc_num: rvcNum, name, active: true, extra };
   });
 }
@@ -170,12 +178,16 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       item_num: String(miNum),
       name,
       extra: {
-        miNum,
+        num: miNum,
         name,
-        miName: name,
+        mstrNum: miNum,
+        mstrName: name,
         majGrpNum: randInt(1, 6),
+        majGrpName: 'Food',
         famGrpNum: randInt(1, 12),
-        active: true,
+        famGrpName: 'Entrees',
+        category: 'Food',
+        revFlag: true,
       },
     };
   });
@@ -189,14 +201,14 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       item_num: `${miNum}-1`,
       name: menu.name,
       extra: {
-        miNum,
-        priceSeq: 1,
-        seq: 1,
+        num: miNum,
+        rvcNum: 1,
+        prcLvlNum: 1,
+        prcLvlName: 'Default',
         price: money(4, 38),
-        effectiveFrom: '2020-01-01',
-        effFrom: '2020-01-01',
-        effectiveTo: null,
-        effTo: null,
+        cost: money(1, 12),
+        effFrDt: '2020-01-01',
+        effToDt: null,
       },
     });
   }
@@ -218,7 +230,7 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: String(dscNum),
       name,
-      extra: { dscNum, name, active: true },
+      extra: { num: dscNum, name, mstrNum: dscNum, mstrName: name, posPercent: 0 },
     });
   });
 
@@ -232,14 +244,18 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       item_num: String(empNum),
       name: `${fName} ${lName}`,
       extra: {
-        empNum,
+        num: empNum,
+        uuid: empNum,
+        employeeId: empNum,
         fName,
-        firstName: fName,
         lName,
-        lastName: lName,
-        payrollID: `PR${empNum}`,
-        payrollId: `PR${empNum}`,
-        active: true,
+        payrollId: empNum,
+        externalPayrollID: empNum,
+        homeLocRef: locRef,
+        className: 'Staff',
+        classNum: 1,
+        classMstrName: 'Staff',
+        classMstrNum: 1,
       },
     };
   });
@@ -252,18 +268,18 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: String(jcNum),
       name: job.name,
-      extra: { jcNum, jobCodeNum: jcNum, name: job.name, laborCat: job.laborCat, labCat: job.laborCat },
+      extra: { num: jcNum, name: job.name, mstrNum: jcNum, mstrName: job.name, lbrCatNum: 1, lbrCatName: job.laborCat },
     });
   });
 
   pick(ORDER_CHANNELS, randInt(2, 4)).forEach((name, i) => {
     const ocNum = i + 1;
-    items.push({ kind: 'order_channel', loc_ref: locRef, item_num: String(ocNum), name, extra: { ocNum, name } });
+    items.push({ kind: 'order_channel', loc_ref: locRef, item_num: String(ocNum), name, extra: { num: ocNum, name, mstrNum: ocNum, mstrName: name } });
   });
 
   pick(ORDER_TYPES, randInt(3, 4)).forEach((name, i) => {
     const otNum = i + 1;
-    items.push({ kind: 'order_type', loc_ref: locRef, item_num: String(otNum), name, extra: { otNum, name } });
+    items.push({ kind: 'order_type', loc_ref: locRef, item_num: String(otNum), name, extra: { num: otNum, name, mstrNum: otNum, mstrName: name } });
   });
 
   pick(REASON_CODES, randInt(3, 4)).forEach((name, i) => {
@@ -273,23 +289,23 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: String(rsnNum),
       name,
-      extra: { rsnCodeNum: rsnNum, rsnNum, name },
+      extra: { num: rsnNum, name, mstrNum: rsnNum, mstrName: name, posRef: rsnNum, type: 48 },
     });
   });
 
   pick(SERVICE_CHARGES, randInt(2, 3)).forEach((name, i) => {
     const svcNum = i + 1;
-    items.push({ kind: 'service_charge', loc_ref: locRef, item_num: String(svcNum), name, extra: { svcNum, name } });
+    items.push({ kind: 'service_charge', loc_ref: locRef, item_num: String(svcNum), name, extra: { num: svcNum, name, mstrNum: svcNum, mstrName: name, posPercent: 18, revFlag: true, chrgTipsFlag: false } });
   });
 
   pick(TAXES, randInt(2, 3)).forEach((name, i) => {
     const taxNum = i + 1;
-    items.push({ kind: 'tax', loc_ref: locRef, item_num: String(taxNum), name, extra: { taxNum, name } });
+    items.push({ kind: 'tax', loc_ref: locRef, item_num: String(taxNum), name, extra: { num: taxNum, name, mstrNum: taxNum, mstrName: name, type: 2, taxRate: 8.25, effFrDt: '2020-01-01' } });
   });
 
   pick(TENDERS, randInt(3, 5)).forEach((name, i) => {
     const tmNum = i + 1;
-    items.push({ kind: 'tender_media', loc_ref: locRef, item_num: String(tmNum), name, extra: { tmNum, name } });
+    items.push({ kind: 'tender_media', loc_ref: locRef, item_num: String(tmNum), name, extra: { num: tmNum, name, mstrNum: tmNum, mstrName: name, type: 1, subType: 1, cat: 2 } });
   });
 
   for (const emp of pick(employees, Math.min(4, employees.length))) {
@@ -298,13 +314,13 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: emp.item_num,
       name: emp.name,
-      extra: { cashierNum: Number(emp.item_num), empNum: Number(emp.item_num), name: emp.name },
+      extra: { num: Number(emp.item_num), name: emp.name, mstrNum: Number(emp.item_num), mstrName: emp.name },
     });
   }
 
   pick(CM_ITEMS, randInt(3, 4)).forEach((name, i) => {
     const cmItemNum = i + 1;
-    items.push({ kind: 'cm_item', loc_ref: locRef, item_num: String(cmItemNum), name, extra: { cmItemNum, name } });
+    items.push({ kind: 'cm_item', loc_ref: locRef, item_num: String(cmItemNum), name, extra: { num: cmItemNum, name, mstrNum: cmItemNum, mstrName: name, type: 1, recordNum: cmItemNum } });
   });
 
   const holderCount = randInt(2, 3);
@@ -316,7 +332,7 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: id,
       name,
-      extra: { acctHolderId: id, id, name },
+      extra: { acctHldrCode: id, acctHldrName: name, stlmtCur: 'USD', acctHldrStatus: 2, verification: 1, countryCode: 'US', createdDt: '2021-04-12' },
     });
   }
 
@@ -328,7 +344,7 @@ export function generateDimensionItems(locRef: string): DimItem[] {
       loc_ref: locRef,
       item_num: id,
       name,
-      extra: { acctId: id, id, name },
+      extra: { acctCode: id, acctName: name, acctHldrCode: `AH-${locRef}-1`, createdDt: '2021-05-17', acctStatus: 1, ccStmtName: name },
     });
   }
 

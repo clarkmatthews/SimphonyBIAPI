@@ -1,7 +1,21 @@
-import { APP_NAME, type OracleConfig } from './auth';
+import { DEFAULT_APP_NAME, type OracleConfig } from './auth';
 
-export async function biPost(config: OracleConfig, idToken: string, operation: string, body: Record<string, unknown> = {}) {
-  const url = `${config.appHost}/bi/v1/${config.orgIdentifier}/${operation}`;
+export function biRequest(config: OracleConfig, operation: string, body: Record<string, unknown> = {}) {
+  const applicationName = config.applicationName || DEFAULT_APP_NAME;
+  return {
+    url: `${config.appHost}/bi/v1/${config.orgIdentifier}/${operation}`,
+    request: { applicationName, ...body },
+  };
+}
+
+export async function biPost(
+  config: OracleConfig,
+  idToken: string,
+  operation: string,
+  body: Record<string, unknown> = {},
+  signal?: AbortSignal
+) {
+  const { url, request } = biRequest(config, operation, body);
   const res = await fetch(url, {
     method: 'POST',
     headers: {
@@ -9,7 +23,8 @@ export async function biPost(config: OracleConfig, idToken: string, operation: s
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ applicationName: APP_NAME, ...body }),
+    body: JSON.stringify(request),
+    signal,
   });
   const text = await res.text();
   if (!res.ok) {

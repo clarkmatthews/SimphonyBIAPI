@@ -9,7 +9,8 @@ const empty = {
   category_id: 'daily',
   endpoint_id: 'getOperationsDailyTotals',
   enabled: false,
-  timeout_sec: 3600,
+  timeout_sec: 90,
+  max_attempts: 3,
   notes: '',
   scheduleType: 'daily',
   everyMinutes: 15,
@@ -37,6 +38,7 @@ export function EventForm({ eventId }: { eventId?: string }) {
           endpoint_id: event.endpoint_id,
           enabled: event.enabled,
           timeout_sec: event.timeout_sec,
+          max_attempts: event.max_attempts ?? 3,
           notes: event.notes || '',
           scheduleType: event.schedule.type,
           everyMinutes: event.schedule.everyMinutes || 15,
@@ -67,6 +69,7 @@ export function EventForm({ eventId }: { eventId?: string }) {
       endpoint_id: form.endpoint_id,
       enabled: form.enabled,
       timeout_sec: Number(form.timeout_sec),
+      max_attempts: Number(form.max_attempts),
       notes: form.notes,
       schedule,
       target: {
@@ -193,7 +196,25 @@ export function EventForm({ eventId }: { eventId?: string }) {
         )}
         <label className="space-y-1 text-sm">
           <div>Timeout (seconds)</div>
-          <input type="number" className="w-full" value={form.timeout_sec} onChange={(e) => set('timeout_sec', Number(e.target.value))} />
+          <input
+            type="number"
+            min={1}
+            className="w-full"
+            value={form.timeout_sec}
+            onChange={(e) => set('timeout_sec', Number(e.target.value))}
+          />
+          <div className="text-xs text-slate-400">Default 90. The job stops if it runs longer than this.</div>
+        </label>
+        <label className="space-y-1 text-sm">
+          <div>Attempts</div>
+          <input
+            type="number"
+            min={1}
+            className="w-full"
+            value={form.max_attempts}
+            onChange={(e) => set('max_attempts', Number(e.target.value))}
+          />
+          <div className="text-xs text-slate-400">Default 3. Each BI request is tried this many times after authentication.</div>
         </label>
         <label className="flex items-center gap-2 text-sm mt-6">
           <input type="checkbox" checked={form.enabled} onChange={(e) => set('enabled', e.target.checked)} />

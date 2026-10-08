@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { StatusBadge, formatElapsed, formatWhen } from '@/components/StatusBadge';
+import { IoExchangeList } from '@/components/IoExchangeList';
 
 export default function RunDetailPage() {
   const params = useParams<{ runId: string }>();
@@ -49,6 +50,11 @@ export default function RunDetailPage() {
       )}
       {run.error && <div className="card p-3 text-red-300">{run.error}</div>}
       <pre className="card p-4 text-xs overflow-auto max-h-[480px] whitespace-pre-wrap">{run.log_text || 'No log yet.'}</pre>
+      <div className="space-y-2">
+        <h2 className="text-lg font-semibold">Request / response</h2>
+        <p className="text-xs text-slate-500">Captured from the BI API before rows were upserted. Open a step with +.</p>
+        <IoExchangeList exchanges={run.io_exchanges} />
+      </div>
     </div>
   );
 }

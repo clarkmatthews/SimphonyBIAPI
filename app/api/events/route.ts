@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { logActivity } from '@/lib/activity';
 import { ENDPOINTS } from '@/lib/bi/catalog';
-import { createEvent, listEvents } from '@/lib/events';
+import { createEvent, listEvents, normalizeAttempts, normalizeTimeout } from '@/lib/events';
 import { getSettings } from '@/lib/settings';
 
 export const dynamic = 'force-dynamic';
@@ -22,7 +22,8 @@ export async function POST(req: Request) {
       enabled: Boolean(body.enabled),
       schedule: body.schedule,
       target: body.target,
-      timeout_sec: Number(body.timeout_sec || 3600),
+      timeout_sec: normalizeTimeout(body.timeout_sec),
+      max_attempts: normalizeAttempts(body.max_attempts),
       notes: body.notes || null,
     },
     settings.timezone
